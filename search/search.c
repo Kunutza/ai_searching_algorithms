@@ -2,6 +2,7 @@
 #include <limits.h>
 #include <stdio.h>
 
+#include "../definitions.h"
 
 int heuristic(int p[N]) {
     int distance = abs(p[1] - p[0]);
@@ -174,7 +175,10 @@ void initialize_search(int puzzle[N], int method)
 }
 
 int is_solution(int p[N]){
-    printf("%d, %d\n", p[0], p[1]);
+
+    if (LOG) {
+        printf("%d, %d\n", p[0], p[1]);
+    }
     return p[0] == p[1];
 }
 

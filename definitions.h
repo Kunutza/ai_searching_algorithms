@@ -10,6 +10,8 @@
 #define BEST    3
 #define ASTAR   4
 
+#define LOG 1 // When at 0 the programm does not print the operations that took place ("%d, %d", curret_value, goa_value)
+
 // Add 1,       final value: X+1,        cost: 2,               X<10^9
 // Subtract 1,  final value: X-1,        cost: 2,               X>0
 // Duplicate,   final value: 2X,         cost: ceil(X/2)+1,     X>0, 2X<=10^9

@@ -1,5 +1,6 @@
 #include "writer.h"
 #include <math.h>
+#include <stdio.h>
 
 // Giving a (solution) leaf-node of the search tree, this function puts
 // the solution of the puzzle into a seperate dynamic table, and also finds
@@ -79,34 +80,35 @@ void write_solution_to_file(char* filename, int solution_length, int *solution, 
             case ADD:
                 cost = 2;
                 current_value += 1;
-                fprintf(fout,"ADD %d %d\n", current_value, cost);
+                fprintf(fout,"ADD"); 
                 break;
             case SUBTRACT:
                 cost = 2;
                 current_value -= 1;
-                fprintf(fout,"SUBTRACT %d %d\n", current_value, cost);
+                fprintf(fout,"SUBTRACT");
                 break;
             case DUPLICATE:
                 cost = ceil((double)(abs(current_value) / 2.0)) + 1;
                 current_value *= 2;
-                fprintf(fout,"DUPLICATE %d %d\n", current_value, cost);
+                fprintf(fout,"DUPLICATE");
                 break;
             case DOUBLE_DOWN:
                 cost = ceil((double)(abs(current_value) / 4.0)) + 1;
                 current_value = (int)(current_value / 2);
-                fprintf(fout,"DOUBLE_DOWN %d %d\n", current_value, cost);
+                fprintf(fout,"DOUBLE_DOWN");
                 break;
             case SQUARE:
                 cost = ((current_value*current_value) - abs(current_value)) / 4 + 1;
                 current_value *= current_value;
-                fprintf(fout,"SQUARE %d %d\n", current_value, cost);
+                fprintf(fout,"SQUARE");
                 break;
             case SQUARE_ROOT:
                 cost = (abs(current_value) - (int)sqrt((double)abs(current_value))) / 4 + 1;
                 current_value = (int)sqrt((double)current_value);
-                fprintf(fout,"SQUARE_ROOT %d %d\n", current_value, cost);
+                fprintf(fout,"SQUARE_ROOT");
                 break;
         }
+        fprintf(fout, " %d %d\n", current_value, cost);
     }
     fclose(fout);
 }
