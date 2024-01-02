@@ -6,7 +6,10 @@
 int heuristic(int p[N]) {
     int distance = abs(p[1] - p[0]);
 
-    return distance;
+    // the cost to reach the goal can never be smaller than the
+    // distance of the current node divided by 4
+    // that means that the heuristic function is admissible
+    return distance/4;
 };
 
 // This function adds a pointer to a new leaf search-tree node at the front of the frontier.
