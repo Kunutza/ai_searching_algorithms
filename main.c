@@ -51,7 +51,6 @@ int main(int argc, char** argv) {
 
     int puzzle[2] = {starting_value, goal_value};
  	initialize_search(puzzle, method);
-
  	solution_node = search(method);			// The main call
  
  	t2=clock();

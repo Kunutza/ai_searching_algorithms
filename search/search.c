@@ -229,7 +229,6 @@ int calculate_child(struct tree_node *current_node, int method, int operation){
 
     child->parent = current_node;
 
-    // MAKE SWITCH
     switch (operation) {
         case ADD:
             child->operation = ADD;

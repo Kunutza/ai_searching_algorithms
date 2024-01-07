@@ -10,7 +10,6 @@ struct tree_node
 	int g;				// the depth of this node wrt the root of the search tree
 	int f;				// f=0 or f=h or f=h+g, depending on the search algorithm used.
 	struct tree_node *parent;	// pointer to the parrent node (NULL for the root).
-    // CHANGE THE DIRECTION WITH OPERATION
 	int operation;			// The direction of the last move
     int step;
     int p[N];
