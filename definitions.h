@@ -27,7 +27,7 @@
 
 extern clock_t t1;				// Start time of the search algorithm
 extern clock_t t2;				// End time of the search algorithm
-#define TIMEOUT		60	// Program terminates after TIMEOUT secondss
+#define TIMEOUT		10	// Program terminates after TIMEOUT secondss
                         
 extern int solution_length;	// The lenght of the solution table.
 extern int *solution;		// Pointer to a dynamic table with the moves of the solution.

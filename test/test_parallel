@@ -1,0 +1,114 @@
+# This script scales for any number of tests
+# If you make too many tests you will take too much space in the disk (the out.csv file become too big if the algorithms can't find a solution)
+# To combat that run simpler problems, less tests, decrease the time until the algorithms stop searching
+
+starting_value=$1
+goal_value=$2
+number_of_tests='1'
+
+dir_name=""
+dir_name+="$starting_value"
+dir_name+="_"
+dir_name+="$goal_value"
+dir_name+="_tests"
+
+echo $dir_name
+mkdir $dir_name
+
+# run up to 2 jobs at a time, export results in a out.csv file, give arguments 
+# (./puzzle_solve depth/breadth/astar/best starting_value goal_value $dirname/solution_depth/breadth/astar/best_numberoftest)
+parallel --progress --jobs 2 --delay 1 --timeout 3600 --results $dir_name/out.csv \
+  ./puzzle_solve {1} {2} {3} $dir_name/{4}_{1}_{5}.txt ::: depth breadth astar best ::: $starting_value :::+ $goal_value :::+ solution ::: $(seq 1 $number_of_tests)
+
+
+cd $dir_name
+
+# Get the time & steps it took to solve the problem, wherever they are provided
+
+# DEPTH
+# Calculate times
+times_depth="$(awk -F, '($10=="depth") {print $15}' out.csv | grep -o 'Time spent: [^ ]*' | grep -o '[0-9]\+.[0-9]*')"
+times_depth_sum="$( echo $times_depth | awk '{for(i=1;i<=NF;i++) t+=$i; print t; t=0}')"
+times_depth_num="$(echo "$times_depth" | wc -l)"
+times_depth_avg=$(awk "BEGIN {print $times_depth_sum / $times_depth_num}")
+# Calculate steps
+depth_steps="$(head -n 1 solution_depth_*.txt | grep -o '[0-9]\+ ')"
+depth_steps_sum="$( echo $depth_steps | awk '{for(i=1;i<=NF;i++) t+=$i; print t; t=0}')"
+depth_steps_num="$(echo "$depth_steps" | wc -l)"
+depth_steps_avg=$(awk "BEGIN {print $depth_steps_sum / $depth_steps_num}")
+# Print test results
+echo depth
+echo 'times:' $times_depth
+echo 'times sum:' $times_depth_sum
+echo 'times num:' $times_depth_num
+echo 'times avg:' $times_depth_avg
+echo 'steps:' $depth_steps
+echo 'steps sum:' $depth_steps_sum
+echo 'steps num:' $depth_steps_num
+echo -e 'steps avg:' $depth_steps_avg '\n'
+ 
+# BREADTH
+# Calculate times
+times_breadth="$(awk -F, '($10=="breadth") {print $15}' out.csv | grep -o 'Time spent: [^ ]*' | grep -o '[0-9]\+.[0-9]*')"
+times_breadth_sum="$( echo $times_breadth | awk '{for(i=1;i<=NF;i++) t+=$i; print t; t=0}')"
+times_breadth_num="$(echo "$times_breadth" | wc -l)"
+times_breadth_avg=$(awk "BEGIN {print $times_breadth_sum / $times_breadth_num}")
+# Calculate steps
+breadth_steps="$(head -n 1 solution_breadth_*.txt | grep -o '[0-9]\+ ')"
+breadth_steps_sum="$( echo $breadth_steps | awk '{for(i=1;i<=NF;i++) t+=$i; print t; t=0}')"
+breadth_steps_num="$(echo "$breadth_steps" | wc -l)"
+breadth_steps_avg=$(awk "BEGIN {print $breadth_steps_sum / $breadth_steps_num}")
+# Print test results
+echo breadth
+echo 'times:' $times_breadth
+echo 'times sum:' $times_breadth_sum
+echo 'times num:' $times_breadth_num
+echo 'times avg:' $times_breadth_avg
+echo 'steps:' $breadth_steps
+echo 'steps sum:' $breadth_steps_sum
+echo 'steps num:' $breadth_steps_num
+echo -e 'steps avg:' $breadth_steps_avg '\n'
+
+# ASTAR
+# Calculate times
+times_astar="$(awk -F, '($10=="astar") {print $15}' out.csv | grep -o 'Time spent: [^ ]*' | grep -o '[0-9]\+.[0-9]*')"
+times_astar_sum="$( echo $times_astar | awk '{for(i=1;i<=NF;i++) t+=$i; print t; t=0}')"
+times_astar_num="$(echo "$times_astar" | wc -l)"
+times_astar_avg=$(awk "BEGIN {print $times_astar_sum / $times_astar_num}")
+# Calculate steps
+astar_steps="$(head -n 1 solution_astar_*.txt | grep -o '[0-9]\+ ')"
+astar_steps_sum="$( echo $astar_steps | awk '{for(i=1;i<=NF;i++) t+=$i; print t; t=0}')"
+astar_steps_num="$(echo "$astar_steps" | wc -l)"
+astar_steps_avg=$(awk "BEGIN {print $astar_steps_sum / $astar_steps_num}")
+# Print test results
+echo astar
+echo 'times:' $times_astar
+echo 'times sum:' $times_astar_sum
+echo 'times num:' $times_astar_num
+echo 'times avg:' $times_astar_avg
+echo 'steps:' $astar_steps
+echo 'steps sum:' $astar_steps_sum
+echo 'steps num:' $astar_steps_num
+echo -e 'steps avg:' $astar_steps_avg '\n'
+
+# BEST
+# Calculate times
+times_best="$(awk -F, '($10=="best") {print $15}' out.csv | grep -o 'Time spent: [^ ]*' | grep -o '[0-9]\+.[0-9]*')"
+times_best_sum="$( echo $times_best | awk '{for(i=1;i<=NF;i++) t+=$i; print t; t=0}')"
+times_best_num="$(echo "$times_best" | wc -l)"
+times_best_avg=$(awk "BEGIN {print $times_best_sum / $times_best_num}")
+# Calculate steps
+best_steps="$(head -n 1 solution_best_*.txt | grep -o '[0-9]\+ ')"
+best_steps_sum="$( echo $best_steps | awk '{for(i=1;i<=NF;i++) t+=$i; print t; t=0}')"
+best_steps_num="$(echo "$best_steps" | wc -l)"
+best_steps_avg=$(awk "BEGIN {print $best_steps_sum / $best_steps_num}")
+# Print test results
+echo best
+echo 'times:' $times_best
+echo 'times sum:' $times_best_sum
+echo 'times num:' $times_best_num
+echo 'times avg:' $times_best_avg 
+echo 'steps:' $best_steps
+echo 'steps sum:' $best_steps_sum
+echo 'steps num:' $best_steps_num
+echo -e 'steps avg:' $best_steps_avg '\n'

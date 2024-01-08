@@ -177,7 +177,7 @@ void initialize_search(int puzzle[N], int method)
 int is_solution(int p[N]){
 
     if (LOG) {
-        printf("%d, %d\n", p[0], p[1]);
+        printf(" %d", p[0]);
     }
     return p[0] == p[1];
 }

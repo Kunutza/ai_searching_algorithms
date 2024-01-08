@@ -46,7 +46,7 @@ int main(int argc, char** argv) {
 	if (err<0)
 		return -1;
 
-	printf("Solving %s using %s...\n",argv[2],argv[1]);
+	printf("Solving %s using %s... ",argv[2],argv[1]);
 	t1=clock();
 
     int puzzle[2] = {starting_value, goal_value};
@@ -62,8 +62,8 @@ int main(int argc, char** argv) {
  
  	if (solution_node!=NULL)
  	{
- 		printf("Solution found! (%d steps)\n",solution_length);
- 		printf("Time spent: %f secs\n",((float) t2-t1)/CLOCKS_PER_SEC);
+ 		printf(" Solution found! (%d steps)",solution_length);
+ 		printf(" Time spent: %f secs",((float) t2-t1)/CLOCKS_PER_SEC);
  		write_solution_to_file(argv[4], solution_length, solution, puzzle[0]);
  	}
  
